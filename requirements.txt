@@ -1,0 +1,7 @@
+Flask
+Flask-Session
+pytz
+requests
+numpy
+pandas
+matplotlib

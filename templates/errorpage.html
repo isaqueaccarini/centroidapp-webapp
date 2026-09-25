@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block main %}
+    <div class="my-5 text-center">
+        <span class="display-1 fw-bold">{{ errorcode }}</span>
+    </div>
+    <div class="my-5 text-center">
+        <span class="fs-1 fw-medium">Error {{ errorcode }}: {{ message }}</span>
+    </div>
+    <a href="/"class="btn btn-outline-info btn-lg" type="submit">Return to Homepage</a>
+{% endblock %}
