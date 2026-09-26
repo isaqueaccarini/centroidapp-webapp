@@ -34,36 +34,38 @@ def index():
     # User reached route via GET (as by clicking a link or via redirect)
     if request.method == "GET":
         return render_template("index.html")
+
+@app.route("/exec_kmeans", methods="POST")
+def exec_kmeans():
+    """Execute algorithm and return with results"""
     
-    # User reached route via POST (as by submitting a form via POST)
-    else:
-        selected_scenario = request.form.get("scenario")
-        selected_k_amount = request.form.get("k_amount")
-        selected_max_iter = request.form.get("max_iter")
-        
-        # Ensure user selected scenario
-        if not selected_scenario:
-            return httperror("Must select a scenario", 400)
-        
-        # Ensure user's selected scenario is valid
-        if selected_scenario not in ["scenario1","scenario2","scenario3","scenario4","scenario5"]:
-            return httperror("Select a valid scenario", 400)
-        
-        # Check if user typed k_amount
-        if not selected_k_amount:
-            selected_k_amount = 4
-        
-        # Check if amount is not between 1 and 20
-        if not 20 >= selected_k_amount >= 1:
-            return httperror("K amount range is between 1 and 20", 400)
-        
-        # Check if user typed max_iter
-        if not selected_max_iter:
-            selected_max_iter = 20
-        
+    selected_scenario = request.form.get("scenario")
+    selected_k_amount = request.form.get("k_amount")
+    selected_max_iter = request.form.get("max_iter")
+    
+    # Ensure user selected scenario
+    if not selected_scenario:
+        return httperror("Must select a scenario", 400)
+    
+    # Ensure user's selected scenario is valid
+    if selected_scenario not in ["scenario1","scenario2","scenario3","scenario4","scenario5"]:
+        return httperror("Select a valid scenario", 400)
+    
+    # Check if user typed k_amount
+    if not selected_k_amount:
+        selected_k_amount = 4
+    
+    # Check if amount is not between 1 and 20
+    if not 20 >= selected_k_amount >= 1:
+        return httperror("K amount range is between 1 and 20", 400)
+    
+    # Check if user typed max_iter
+    if not selected_max_iter:
+        selected_max_iter = 20
+    
     kmeans(scenario=selected_scenario, k=selected_k_amount, max_iter=selected_max_iter)
-    
-    return render_template("index.html")
+
+    return render_template()
 
 
 @app.route("/executions")
