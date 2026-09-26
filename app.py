@@ -1,5 +1,8 @@
 import os
-from flask import Flask,redirect, render_template, request, session, send_from_directory
+import base64
+import io
+import zipfile
+from flask import Flask,redirect, render_template, request, session, send_from_directory, jsonify
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -63,9 +66,51 @@ def exec_kmeans():
     if not selected_max_iter:
         selected_max_iter = 20
     
-    kmeans(scenario=selected_scenario, k=selected_k_amount, max_iter=selected_max_iter)
+    #Execute KMeans
+    original_image, clusters_image, metrics_image, movement_image, log_info = kmeans(scenario=selected_scenario, k=selected_k_amount, max_iter=selected_max_iter)
+    
+    log_bytes = log_info.encode('utf-8')
 
-    return render_template()
+    # Make zip file
+    zip_buffer = io.BytesIO()
+    
+    with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zip_file:
+        zip_file.writestr('exec_log.txt', log_bytes)
+        zip_file.writestr('original_graph.png', original_image)
+        zip_file.writestr('clusters_graph.png', clusters_image)
+        zip_file.writestr('metrics_graph.png', metrics_image)
+        zip_file.writestr('movement_graph.png', movement_image)
+    
+    zip_buffer.seek(0)
+    zip_bytes = zip_buffer.getvalue()
+    
+    # If logged, insert into kmeans.db
+    user_in_session = session.get("user_id")
+    if user_in_session:
+        sqlexecute("INSERT INTO executions (user_id, scenario, k_value, max_iter, exec_zip) VALUES (?, ?, ?, ?, ?)",
+                   user_in_session,
+                   selected_scenario,
+                   selected_k_amount,
+                   selected_max_iter,
+                   zip_bytes)
+    
+    # Send JSON with zip and loose files
+    original_image_b64 = base64.b64encode(original_image).decode('utf-8')
+    clusters_image_b64 = base64.b64encode(clusters_image).decode('utf-8')
+    metrics_image_b64 = base64.b64encode(metrics_image).decode('utf-8')
+    movement_image_b64 = base64.b64encode(movement_image).decode('utf-8')
+    zip_bytes_b64 = base64.b64encode(zip_bytes).decode('utf-8')
+    
+    exec_json = {
+        'original_image_b64': original_image_b64,
+        'clusters_image_b64': clusters_image_b64,
+        'metrics_image_b64': metrics_image_b64,
+        'movement_image_b64': movement_image_b64,
+        'log_info': log_info,
+        'zip_bytes_b64': zip_bytes_b64
+    }
+
+    return jsonify(exec_json)
 
 
 @app.route("/executions")

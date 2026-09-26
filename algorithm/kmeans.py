@@ -1,4 +1,3 @@
-import base64
 import numpy as np
 import pandas as pd
 
@@ -20,7 +19,7 @@ def kmeans(scenario, k=4, max_iter=20):
         title = "Scenario 5"
 
     # Show the original scenario
-    original_graph(scenario, title)
+    original_image = original_graph(scenario, title)
 
     # Tolerance for total centroid movement
     tol = 0.001
@@ -172,19 +171,18 @@ def kmeans(scenario, k=4, max_iter=20):
 
     # Final information
     log_info = "--- Algorithm log ---\n"
+    log_info += title+"\n"
     log_info += stop_reason
-    log_info += f"  K value: {k}"
-    log_info += f"  Max iterations: {max_iter}"
+    log_info += f"  K value: {k}\n"
+    log_info += f"  Max iterations: {max_iter}\n"
     log_info += f"  Number of iterations: {iteration}\n"
     log_info += f"  Were there empty clusters: {empty_clusters}\n"
     log_info += f"  Variability: {total_variability:.4f}\n"
     log_info += f"  Dissimilarity: {dissimilarity_mean:.4f}\n"
     log_info += f"  Total Movement: {np.sum(mov_centroids):.4f}"
-    
-    log_bytes = log_info.encode('utf-8')
 
     clusters_image = kmeans_graph(scenario, title, k, centroids, iteration, ev=each_variability)
     metrics_image = metrics_graphs(variability_history, dissimilarity_history, iteration)
     movement_image = movement_graph(df_mov_centroids, iteration, "History: Total movement")
     
-    return clusters_image, metrics_image, movement_image, log_bytes
+    return original_image, clusters_image, metrics_image, movement_image, log_info
