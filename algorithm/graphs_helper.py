@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+import io
+import base64
 
 def original_graph(scenario, title):
   plt.figure(figsize=(5, 5), dpi=80)
@@ -12,7 +14,14 @@ def original_graph(scenario, title):
   plt.xlabel("X Axis")
   plt.ylabel("Y Axis")
   plt.title(title)
-  plt.show()
+  
+  img_buffer = io.BytesIO()
+  plt.savefig(img_buffer, format='png', bbox_inches='tight')
+  img_buffer.seek(0)
+  img_bytes = img_buffer.getvalue()
+  plt.close()
+  
+  return img_bytes
 
 colors = ['red', 'lightskyblue', 'lime', 'mediumpurple', 'aquamarine','cadetblue','orange','tan','pink','lavender',
           'green','deeppink','yellow','salmon','steelblue','purple','royalblue','powderblue','thistle','saddlebrown']
@@ -48,8 +57,14 @@ def kmeans_graph(scenario, title, k, centroids, iter, ev=None):
     plt.plot(centroid_history['X'], centroid_history['Y'], color='black', linestyle='--', linewidth=2, alpha=0.8)
     # Plots smaller dots to indicate the past positions it passed through
     plt.scatter(centroid_history['X'].iloc[:-1], centroid_history['Y'].iloc[:-1], color='white', marker='o', s=30, edgecolors='black', alpha=0.6)
-  plt.show()
+    
+  img_buffer = io.BytesIO()
+  plt.savefig(img_buffer, format='png', bbox_inches='tight')
+  img_buffer.seek(0)
+  img_bytes = img_buffer.getvalue()
   plt.close()
+  
+  return img_bytes
   
   
 def metrics_graphs(vh, dh, iter):
@@ -72,7 +87,13 @@ def metrics_graphs(vh, dh, iter):
   ax2.grid(True)
 
   plt.tight_layout()
-  plt.show()
+  img_buffer = io.BytesIO()
+  plt.savefig(img_buffer, format='png', bbox_inches='tight')
+  img_buffer.seek(0)
+  img_bytes = img_buffer.getvalue()
+  plt.close()
+  
+  return img_bytes
   
   
 def movement_graph(df, iter, title):
@@ -82,4 +103,11 @@ def movement_graph(df, iter, title):
   plt.ylabel("Total movement of centroids")
   plt.xticks(range(iter + 1))
   plt.title(title)
-  plt.show()
+  
+  img_buffer = io.BytesIO()
+  plt.savefig(img_buffer, format='png', bbox_inches='tight')
+  img_buffer.seek(0)
+  img_bytes = img_buffer.getvalue()
+  plt.close()
+  
+  return img_bytes

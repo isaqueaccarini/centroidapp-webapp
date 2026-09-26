@@ -1,3 +1,4 @@
+import base64
 import numpy as np
 import pandas as pd
 
@@ -141,17 +142,15 @@ def kmeans(scenario, k=4, max_iter=20):
         centroids_mov_history.append(round(np.sum(mov_centroids), 4))
         mov_centroids_mean = np.mean(mov_centroids)
 
+        stop_reason = ""
         # Stopping criterion: mean centroid movement less than tol
         if mov_centroids_mean < tol:
-            print("Execution stopped! Centroids are moving below the tolerance.")
-            print(f"Total iterations performed: {iteration}")
+            stop_reason = "Centroids were moving below the tolerance. Total iterations performed\n"
             break
 
         # Stopping criterion: maximum number of iterations
         if iteration == max_iter:
-            print(
-                f"Execution stopped! Reached maximum number of executions: {max_iter}"
-            )
+            stop_reason = "Execution stopped! Reached maximum number of executions\n"
             break
 
         # Verify which point belongs to which cluster
@@ -172,14 +171,20 @@ def kmeans(scenario, k=4, max_iter=20):
     )
 
     # Final information
-    print(f"\n--- Final ---")
+    log_info = "--- Algorithm log ---\n"
+    log_info += stop_reason
+    log_info += f"  K value: {k}"
+    log_info += f"  Max iterations: {max_iter}"
+    log_info += f"  Number of iterations: {iteration}\n"
+    log_info += f"  Were there empty clusters: {empty_clusters}\n"
+    log_info += f"  Variability: {total_variability:.4f}\n"
+    log_info += f"  Dissimilarity: {dissimilarity_mean:.4f}\n"
+    log_info += f"  Total Movement: {np.sum(mov_centroids):.4f}"
+    
+    log_bytes = log_info.encode('utf-8')
 
-    print(f"  Number of iterations: {iteration}")
-    print(f"  Were there empty clusters: {empty_clusters}")
-    print(f"  Variability: {total_variability:.4f}")
-    print(f"  Dissimilarity: {dissimilarity_mean:.4f}")
-    print(f"  Total Movement: {np.sum(mov_centroids):.4f}")
-
-    kmeans_graph(scenario, title, k, centroids, iteration, ev=each_variability)
-    metrics_graphs(variability_history, dissimilarity_history, iteration)
-    movement_graph(df_mov_centroids, iteration, "History: Total movement")
+    clusters_image = kmeans_graph(scenario, title, k, centroids, iteration, ev=each_variability)
+    metrics_image = metrics_graphs(variability_history, dissimilarity_history, iteration)
+    movement_image = movement_graph(df_mov_centroids, iteration, "History: Total movement")
+    
+    return clusters_image, metrics_image, movement_image, log_bytes
