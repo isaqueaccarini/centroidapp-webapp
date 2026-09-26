@@ -5,7 +5,7 @@ from algorithm.graphs_helper import original_graph, kmeans_graph, metrics_graphs
 from algorithm.scenarios import df_1, df_2, df_3, df_4, df_5
 
 
-def kmeans(scenario, k=4, centroids=None, max_iter=20):
+def kmeans(scenario, k=4, max_iter=20):
     # Identify scenario (for graphs)
     if scenario.equals(df_1):
         title = "Scenario 1"
@@ -24,16 +24,11 @@ def kmeans(scenario, k=4, centroids=None, max_iter=20):
     # Tolerance for total centroid movement
     tol = 0.001
 
-    # Generate initial centroids or not
-    if centroids is None:
-        centroids = np.random.uniform(0, 1, size=(k, 2))
-        centroids = np.round(centroids, 3)
-        centroids = pd.DataFrame(centroids, columns=["X", "Y"])
-        centroids.index = centroids.index + 1
-    else:
-        # If specifying where each centroid will start
-        centroids = pd.DataFrame(centroids, columns=["X", "Y"])
-        centroids.index = centroids.index + 1
+    # Generate initial centroids
+    centroids = np.random.uniform(0, 1, size=(k, 2))
+    centroids = np.round(centroids, 3)
+    centroids = pd.DataFrame(centroids, columns=["X", "Y"])
+    centroids.index = centroids.index + 1
 
     # Initialize history
     variability_history = []
