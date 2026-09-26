@@ -1,4 +1,5 @@
-from flask import Flask, redirect, render_template, request, session
+import os
+from flask import Flask,redirect, render_template, request, session, send_from_directory
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -174,3 +175,11 @@ def register():
         session["user_id"] = new_user[0]["id"]
 
         return redirect("/")
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(
+        os.path.join(app.root_path, 'static'),
+        'favicon.ico',
+    )
