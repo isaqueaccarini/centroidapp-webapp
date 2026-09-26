@@ -1,0 +1,15 @@
+body{
+    background-color: rgb(122, 139, 146);
+}
+
+.navbar-brand{
+    color: rgb(0, 78, 138);
+}
+
+main img{
+    width: 250px;
+}
+
+main form .form-control{
+    width: 200px;
+}

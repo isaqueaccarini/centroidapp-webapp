@@ -5,5 +5,45 @@
 {% endblock %}
 
 {% block main %}
-   
+   <h1 class="mb-5 fw-bold">Select a Scenario</h1>
+   <form action="/" method="post">
+        <div class="mb-3 d-flex gap-3 justify-content-center">
+            <div class="d-flex flex-column align-items-center gap-3">
+                <label for="radio_scenario_1">
+                    <img src="{{ url_for('static', filename='scenarios/scenario1.png') }}" alt="Scenario 1">
+                </label>
+                <input type="radio" id="radio_scenario_1" name="scenario" value="scenario1">
+            </div>
+            <div class="d-flex flex-column align-items-center gap-3">
+                <label for="radio_scenario_2">
+                    <img src="{{ url_for('static', filename='scenarios/scenario2.png') }}" alt="Scenario 2">
+                </label>
+                <input type="radio" id="radio_scenario_2" name="scenario" value="scenario2">
+            </div>
+            <div class="d-flex flex-column align-items-center gap-3">
+                <label for="radio_scenario_3">
+                    <img src="{{ url_for('static', filename='scenarios/scenario3.png') }}" alt="Scenario 3">
+                </label>
+                <input type="radio" id="radio_scenario_3" name="scenario" value="scenario3">
+            </div>
+            <div class="d-flex flex-column align-items-center gap-3">
+                <label for="radio_scenario_4">
+                    <img src="{{ url_for('static', filename='scenarios/scenario4.png') }}" alt="Scenario 4">
+                </label>
+                <input type="radio" id="radio_scenario_4" name="scenario" value="scenario4">
+            </div>
+            <div class="d-flex flex-column align-items-center gap-3">
+                <label for="radio_scenario_5">
+                    <img src="{{ url_for('static', filename='scenarios/scenario5.png') }}" alt="Scenario 5">
+                </label>
+                <input type="radio" id="radio_scenario_5" name="scenario" value="scenario5">
+            </div>
+        </div>
+        <div class="mt-5 d-flex justify-content-center gap-4">
+            <input autocomplete="off" class="form-control" name="k_amount" placeholder="K value" type="number" min="1" max="20">
+            <input autocomplete="off" class="form-control" name="max_iter" placeholder="Max iterations" type="number" min="1">
+            <button class="btn btn-dark" type="submit">Execute</button>
+        </div>
+        
+   </form>
 {% endblock %}
