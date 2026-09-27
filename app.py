@@ -30,15 +30,13 @@ def after_request(response):
     return response
 
 
-@app.route("/", methods=["GET, POST"])
+@app.route("/")
 def index():
     """Main page: user can execute an iteration"""
     
-    # User reached route via GET (as by clicking a link or via redirect)
-    if request.method == "GET":
-        return render_template("index.html")
+    return render_template("index.html")
 
-@app.route("/exec_kmeans", methods="POST")
+@app.route("/exec_kmeans", methods=["POST"])
 def exec_kmeans():
     """Execute algorithm and return with results"""
     
@@ -57,6 +55,11 @@ def exec_kmeans():
     # Check if user typed k_amount
     if not selected_k_amount:
         selected_k_amount = 4
+        
+    try:
+        selected_k_amount = int(selected_k_amount)
+    except ValueError:
+        return httperror("K value must be a number", 400)
     
     # Check if amount is not between 1 and 20
     if not 20 >= selected_k_amount >= 1:
@@ -65,6 +68,11 @@ def exec_kmeans():
     # Check if user typed max_iter
     if not selected_max_iter:
         selected_max_iter = 20
+        
+    try:
+        selected_max_iter = int(selected_max_iter)
+    except ValueError:
+        return httperror("Max iteration value must be a number", 400)
     
     #Execute KMeans
     original_image, clusters_image, metrics_image, movement_image, log_info = kmeans(scenario=selected_scenario, k=selected_k_amount, max_iter=selected_max_iter)

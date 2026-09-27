@@ -7,15 +7,24 @@ from algorithm.scenarios import df_1, df_2, df_3, df_4, df_5
 
 def kmeans(scenario, k=4, max_iter=20):
     # Identify scenario (for graphs)
-    if scenario.equals(df_1):
+    if scenario == "scenario1":
+        scenario = df_1
         title = "Scenario 1"
-    elif scenario.equals(df_2):
+        
+    elif scenario == "scenario2":
+        scenario = df_2
         title = "Scenario 2"
-    elif scenario.equals(df_3):
+        
+    elif scenario == "scenario3":
+        scenario = df_3
         title = "Scenario 3"
-    elif scenario.equals(df_4):
+        
+    elif scenario == "scenario4":
+        scenario = df_4
         title = "Scenario 4"
-    elif scenario.equals(df_5):
+        
+    elif scenario == "scenario5":
+        scenario = df_5
         title = "Scenario 5"
 
     # Show the original scenario
@@ -144,12 +153,12 @@ def kmeans(scenario, k=4, max_iter=20):
         stop_reason = ""
         # Stopping criterion: mean centroid movement less than tol
         if mov_centroids_mean < tol:
-            stop_reason = "Centroids were moving below the tolerance. Total iterations performed\n"
+            stop_reason = "\nCentroids were moving below the tolerance.\n\n"
             break
 
         # Stopping criterion: maximum number of iterations
         if iteration == max_iter:
-            stop_reason = "Execution stopped! Reached maximum number of executions\n"
+            stop_reason = "\nExecution stopped! Reached maximum number of executions.\n\n"
             break
 
         # Verify which point belongs to which cluster
