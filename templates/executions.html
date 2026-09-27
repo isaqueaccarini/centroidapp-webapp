@@ -1,9 +1,36 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Executions
+Executions
 {% endblock %}
 
 {% block main %}
-    
+<div class="table-responsive">
+    <table class="table table-dark table-striped container-xxl">
+        <thead>
+            <tr>
+                <th>Executed At</th>
+                <th>Scenario</th>
+                <th>K value</th>
+                <th>Max iterations</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exe in executions %}
+            <tr>
+                <td>{{ exe["executed_at"] }}</td>
+                <td>{{ exe["scenario"] }}</td>
+                <td>{{ exe["k_value"] }}</td>
+                <td>{{ exe["max_iter"] }}</td>
+                <td>
+                    <a href="/download/{{ exe['id'] }}" id="btn-download-zip" class="btn btn-success">
+                        <i class="bi bi-download"></i><span class="d-none d-sm-inline"> Download zip package</span>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

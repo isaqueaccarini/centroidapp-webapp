@@ -2,7 +2,7 @@ import os
 import base64
 import io
 import zipfile
-from flask import Flask,redirect, render_template, request, session, send_from_directory, jsonify
+from flask import Flask, redirect, render_template, request, session, send_from_directory, jsonify, send_file
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -124,7 +124,31 @@ def exec_kmeans():
 @app.route("/executions")
 @login_required
 def executions():
-    return render_template("executions.html")
+    user_in_session = session.get("user_id")
+    
+    executions = sqlexecute("SELECT * FROM executions WHERE user_id = ? ORDER BY executed_at DESC", user_in_session)
+    
+    return render_template("executions.html", executions=executions)
+
+
+@app.route("/download/<int:exec_id>")
+@login_required
+def download(exec_id):
+    user_in_session = session.get("user_id")
+    
+    rows = sqlexecute("SELECT exec_zip FROM executions WHERE id = ? AND user_id = ?", exec_id, user_in_session)
+    
+    if len(rows) != 1:
+        return httperror("Download not authorized", 403)
+        
+    exec_zip = rows[0]["exec_zip"]
+    
+    return send_file(
+        io.BytesIO(exec_zip),
+        mimetype="application/zip",
+        as_attachment=True,
+        download_name=f"kmeans_package.zip"
+    )
 
 
 @app.route("/account", methods=["GET", "POST"])
