@@ -2,4 +2,5 @@ __pycache__
 /algorithm/__pycache__
 /.venv/
 /flask_session/
+.DS_Store
 *.db

@@ -1,6 +1,7 @@
 import os
 import base64
 import io
+import sqlite3
 import zipfile
 from flask import Flask, redirect, render_template, request, session, send_from_directory, jsonify, send_file
 from flask_session import Session
@@ -281,7 +282,7 @@ def register():
                 username,
                 hash_password,
             )
-        except ValueError:
+        except sqlite3.IntegrityError:
             return httperror("user already exists", 400)
 
         # Log in new user
