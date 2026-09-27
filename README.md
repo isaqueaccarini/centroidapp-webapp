@@ -1,6 +1,4 @@
 # CentroidApp
-#### Video Demo: https://youtu.be/UNTwx1DWM5o
-#### Description:
 
 *CentroidApp* is a full-stack web application developed to execute, visualize, and store clustering analyses using the K-Means Machine Learning algorithm. The project stands out for its "Zero-Disk Write" architecture, where all data processing, chart generation, and file compression happen entirely in the server's RAM.
 
