@@ -7,7 +7,7 @@ The main goal is to provide an interactive interface where users can select data
 
 ---
 
-## Main Features
+# Main Features
 
 * *Asynchronous Processing:* Form submission via Fetch API, allowing the display of results and loaders (spinners) without reloading the page.
 * *Visualization Generation:* Generates four distinct charts per execution:
@@ -22,7 +22,7 @@ The main goal is to provide an interactive interface where users can select data
 
 ---
 
-## Technologies Used
+# Technologies Used
 
 *Back-end & Infrastructure:*
 * *Python 3:* Main language for the server and algorithm.
@@ -40,7 +40,65 @@ The main goal is to provide an interactive interface where users can select data
 
 ---
 
-## Folder Structure
+# Install
+
+Make sure you have Python 3.10 or higher and Git installed on your machine.
+
+## Guide
+
+**1. Clone the repository**
+
+  First, clone the project to your local machine and navigate into the project directory:
+  ```bash
+  git clone https://github.com/isaqueaccarini/centroidapp-webapp.git
+  cd centroidapp-webapp
+  ```
+
+**2. Create a Virtual Environment**
+Create a `venv`, running all project dependencies separately
+
+  If you are on **Windows**:  
+
+  ```bash
+  python -m venv .venv
+
+  # Using cmd
+  .venv\Scripts\activate.bat
+  # or using powershell
+  .venv\Scripts\activate.ps1
+  ```
+  
+  If you are on **macOS / Linux**:
+  ```bash
+  python3 -m venv .venv
+  source .venv/bin/activate
+  ```
+
+**3. Install the requirements**
+Install the necessary Python dependencies using `pip`.
+
+  ```bash
+  pip install --upgrade pip
+  pip install -r requirements.txt
+  ```
+
+**4. Run the Flask Server**
+To avoid environment variable (PATH) issues, it is recommended to run Flask directly as a Python module. 
+
+  ```bash
+  flask run
+  ```
+
+**5. Access webapp**
+Once the server is running, open your web browser and navigate to the local address:
+
+  ```text
+  http://127.0.0.1:5000
+  ```
+
+---
+
+# Folder Structure
 
 The repository structure was designed to clearly separate mathematical responsibilities, routing logic, and visual elements:
 
