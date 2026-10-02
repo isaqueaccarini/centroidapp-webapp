@@ -1,52 +1,45 @@
 <img width="1280" height="714" alt="Screen Recording 2026-09-30 at 3 18 07 AM" src="https://github.com/user-attachments/assets/abce8377-0470-4d9d-8efe-0230c3667e7f" />
 
-# CentroidApp
+<h1 align="center">🎯 CentroidApp</h1>
 
-*CentroidApp* is a full-stack web application developed to execute, visualize, and store clustering analyses using the K-Means Machine Learning algorithm. The project stands out for its "Zero-Disk Write" architecture, where all data processing, chart generation, and file compression happen entirely in the server's RAM.
-
-## The Project Idea
-The main goal is to provide an interactive interface where users can select data scenarios, define the number of clusters (k) and the iteration limit, and instantly receive the visual and analytical results of the clustering process. In addition to asynchronously displaying the data on the screen, the system packages the reports and charts into a `.zip` file and archives them in a sql database for future reference (user execution history).
-
----
-
-# Main Features
-
-* *Asynchronous Processing:* Form submission via Fetch API, allowing the display of results and loaders (spinners) without reloading the page.
-* *Visualization Generation:* Generates four distinct charts per execution:
-  1. *Original Graph* (Initial data distribution).
-  2. *Clusters Graph* (Final grouping and centroids).
-  3. *Metrics Graph* (Performance evaluation, like Intra-cluster Variance).
-  4. *Movement Graph* (Centroids movement values throughout the iterations).
-* *Packaging:* In-memory generation of a `.zip` file (using `zipfile.ZIP_DEFLATED`) containing the 4 pure PNG images and a `.txt` log file.
-* *Direct Download:* Delivery of the compressed ZIP package to the user via Base64 Data URIs, eliminating the need for temporary download links on the server.
-* *View old executions :* Saves the `.zip` package in raw binary format (BLOB) directly into the database's `executions` table, linked to the logged-in user's ID.
-* *Validation & Security:* Back-end methods against malicious data injection, ensuring parameters like k and iterations are numeric and within safe limits, returning http erros in case of violations.
+**CentroidApp** is a full-stack web application developed to execute, visualize, and store clustering analyses using the K-Means Machine Learning algorithm.
+<br>
+The main goal is to provide an **interactive interface** where users can select **data scenarios**, define the **number of clusters (k)** and the **iteration limit**, and instantly receive the visual and analytical results of the clustering process.
+<br>
+The project stands out for its **"Zero-Disk Write"** architecture, where all data processing, chart generation, and file compression happen entirely in the **server's RAM**.
 
 ---
 
-# Technologies Used
+# 💻 Main Features
 
-*Back-end & Infrastructure:*
-* *Python 3:* Main language for the server and algorithm.
-* *Flask:* Web micro-framework for routing and HTTP request management.
-* *SQLite3:* DBMS.
-
-*Front-end:*
-* *HTML5 & CSS3:* Semantic page structure.
-* *Bootstrap 5:* Grid system, typography styling, UI components and responsive layout.
-* *Vanilla JavaScript:* DOM manipulation and asynchronous communication .
-
-*Data Science & Algorithm:*
-* *Matplotlib:* Chart generation.
-* *From zero K-Means:* Implementation of the clustering algorithm.
+* **Asynchronous Processing:** Form submission via Fetch API, allowing the display of results and loaders (spinners) without reloading the page.
+* **Visualization Generation:** Generates four distinct charts per execution:
+  1. **Original Graph** (Initial data distribution).
+  2. **Clusters Graph** (Final grouping and centroids).
+  3. **Metrics Graph** (Performance evaluation, like Intra-cluster Variance).
+  4. **Movement Graph** (Centroids movement values throughout the iterations).
+* **Packaging:** In-memory generation of a `.zip` file (using `zipfile.ZIP_DEFLATED`) containing the 4 pure PNG images and a `.txt` log file.
+* **Direct Download:** Delivery of the compressed ZIP package to the user via Base64 Data URIs, eliminating the need for temporary download links on the server.
+* **View old executions:** Saves the `.zip` package in raw binary format (BLOB) directly into the database's `executions` table, linked to the logged-in user's ID.
+* **Validation & Security:** Back-end methods against malicious data injection, ensuring parameters like k and iterations are numeric and within safe limits, returning http erros in case of violations.
 
 ---
 
-# Install
+# 🛠️ Technologies Used
+
+<img src="https://skillicons.dev/icons?i=py,flask,sqlite"/>
+<br>
+<img src="https://skillicons.dev/icons?i=html,css,bootstrap,js"/>
+
+**Data Science & Algorithm:**
+* **Matplotlib:** Chart generation.
+* **From zero K-Means:** Implementation of the clustering algorithm.
+
+---
+
+# 📦 Install
 
 Make sure you have Python 3.10 or higher and Git installed on your machine.
-
-## Guide
 
 **1. Clone the repository**
 
@@ -100,7 +93,7 @@ Once the server is running, open your web browser and navigate to the local addr
 
 ---
 
-# Folder Structure
+# 📂 Folder Structure
 
 The repository structure was designed to clearly separate mathematical responsibilities, routing logic, and visual elements:
 
